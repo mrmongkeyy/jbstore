@@ -396,20 +396,41 @@ const openMenuPreview = function(data){
 				</div>
 				<div
 				style="
-					padding:20px 2.5%;
+					padding:0 2.5%;
 					display:flex;
 					width:95%;
+					height:70%;
 					flex-direction:column;
 				"
 				>
 					<div
 					style="
-						font-size:12px;
-						font-weiaght:normal;
-						margin-bottom:10px;
+						display:flex;
+						width:100%;
+						margin-top:10px;
+						align-items:center;
+						justify-content:flex-end;
 					"
 					>
-						<span>RP. ${data.price}</span>
+						<div
+						style="
+							text-align:center;
+							padding:10px;
+							background:black;
+							border-radius:30px;
+							width:100%;
+						"
+						>
+							<span
+							style="
+								padding:8px;
+								background:black;
+								color:white;
+								cursor:pointer;
+							"
+							id=orderbutton
+							>Pesan Sekarang</span>
+						</div>
 					</div>
 					<div
 					style="
@@ -417,6 +438,14 @@ const openMenuPreview = function(data){
 					"
 					>
 						<span>${data.name}</span>
+					</div>
+					<div
+					style="
+						font-size:12px;
+						font-weiaght:normal;
+					"
+					>
+						<span>RP. ${data.price}</span>
 					</div>
 					<div
 					style="
@@ -434,37 +463,17 @@ const openMenuPreview = function(data){
 					<div
 					style="
 						display:flex;
-						width:100%;
-						margin-top:20px;
 						align-items:center;
+						justify-content:flex-start;
+						height:50%;
+						width:100%;
+						overflow:auto;
+						scrollbar-width:thin;
+						margin:10px 0;
 					"
+					id=divshowcase
 					>
-						<div
-						>
-							<span
-							style="
-								padding:8px;
-								background:black;
-								color:white;
-								cursor:pointer;
-							"
-							id=orderbutton
-							>Pesan Sekarang</span>
-						</div>
 					</div>
-				</div>
-				<div
-				style="
-					display:flex;
-					align-items:center;
-					justify-content:flex-start;
-					height:100%;
-					width:100%;
-					overflow:auto;
-					scrollbar-width:thin;
-				"
-				id=divshowcase
-				>
 				</div>
 			</div>
 		`,
@@ -474,7 +483,7 @@ const openMenuPreview = function(data){
 					style:`
 						width:300px;
 						object-fit:cover;
-						height:inherit;
+						height:100%;
 						padding:0 5px;
 					`,
 					src:img,
@@ -512,7 +521,8 @@ const openMenuPreview = function(data){
 					style="
 						background:white;
 						height:auto;
-						padding:20px 1%;
+						padding:20px;
+						border-radius:0 0 30px 30px;
 					"
 					id=whitebox
 					>
@@ -658,6 +668,7 @@ const openMenuPreview = function(data){
 								background:black;
 								color:white;
 								cursor:pointer;
+								border-radius:30px;
 							"
 							id=processorder
 							>Lanjutkan</span>
@@ -667,6 +678,7 @@ const openMenuPreview = function(data){
 								background:black;
 								color:white;
 								cursor:pointer;
+								border-radius:30px;
 							"
 							id=ordercancel
 							>Batalkan</span>
@@ -829,7 +841,7 @@ const showMenus = function(){
 							style="
 								margin-right:20px;
 							"
-							>Stok Kamera</span>
+							>Stok Barang</span>
 						</div>
 					</div>
 				`,
