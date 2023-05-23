@@ -419,6 +419,7 @@ const openMenuPreview = function(data){
 							background:black;
 							border-radius:30px;
 							width:100%;
+							cursor:pointer;
 						"
 						>
 							<span
