@@ -36,14 +36,19 @@ const content = makeElement('content',{
 		flex-direction:column;
 	`,
 	innerHTML:`
-		<div>
+		<div
+		style="
+			height:10%;
+		"
+		>
 			<div
 			style="
 				background:white;
-				padding:20px;
+				padding:0 20px;
 				display:flex;
 				align-items:center;
 				font-weight:bold;
+				height:100%;
 			"
 			>	
 				<img src=file?fn=diaphragm(1).png
@@ -59,7 +64,7 @@ const content = makeElement('content',{
 		<div id=body
 		style="
 			display:flex;
-			height:100%;
+			height:90%;
 			width:100%;
 		"
 		></div>

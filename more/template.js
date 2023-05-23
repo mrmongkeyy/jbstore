@@ -265,7 +265,7 @@ module.exports = {
 						}
 						content{
 							width:60%;
-							height:70%;
+							height:80%;
 						}
 						input{
 							font-family:goodone;
