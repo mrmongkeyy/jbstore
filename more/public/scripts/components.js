@@ -66,8 +66,8 @@ const header = makeElement('header',{
 			style="
 				width:128px;
 				height:128px;
-				background:white;
-				padding:5px;
+				background:#9a4c3338;
+				padding:20px;
 				border-radius:50%;
 				object-fit:cover;
 				position:relative;
@@ -85,6 +85,7 @@ const header = makeElement('header',{
 					color:white;
 					border-radius:10px;
 				"
+				id=bigtitle
 				>FF STORE</span>
 			</div>
 			<div
@@ -92,14 +93,19 @@ const header = makeElement('header',{
 				position:relative;
 				margin-top:10px;
 				font-size:16px;
+				height:32px;
 			"
 			>
 				<span
 				style="
 					color:white;
 					border-radius:10px;
+					min-height:32px;
 				"
-				>Tempat yang bekas dan berkualitas.</span>
+				id=vision
+				>
+					Jangan Pernah Ragu Dengan Pilihanmu!
+				</span>
 			</div>
 			<div
 			style="

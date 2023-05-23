@@ -225,6 +225,26 @@ const readFile = function(src,readMode,callback){
 		callback(this.result);
 	}
 }
+const speedywords = function(words,el,speed=1000){
+	//try to work on this.
+	let wIndex = 0;
+	let cIndex = 0;
+	const display = ()=>{
+		el.innerHTML += `<span>${words[wIndex][cIndex]}</span>`;
+		cIndex++;
+		if(cIndex===words[wIndex].length+1){
+			wIndex++;
+			if(wIndex===words.length){
+				wIndex = 0;
+			}
+			cIndex = 0;
+			el.clear();
+		}
+	}
+	const interval = setInterval(()=>{
+		display();
+	},speed)
+}
 const showElement = function(el,displaymode='flex'){
 	el.style.display = displaymode;
 }
