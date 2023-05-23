@@ -35,9 +35,11 @@ module.exports = {
 						}
 						input{
 							font-family:goodone;
+							border:1px solid black;
 						}
 						textarea{
 							font-family:goodone;
+							border:1px solid black;
 						}
 						main{
 							-webkit-tap-highlight-color:transparent;
@@ -88,7 +90,6 @@ module.exports = {
 						input{
 							outline:none;
 							background:white;
-							border:none;
 							padding:5px;
 						}
 						.photocard{

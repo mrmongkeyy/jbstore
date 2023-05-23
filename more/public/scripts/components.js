@@ -140,13 +140,14 @@ const header = makeElement('header',{
 					background:brown;
 					cursor:pointer;
 				"
-				id=orderbutton
+				id=sellbutton
 				>Jual</span>
 			</div>
 		</div>
 	`,
 	onadded(){
 		this.find('#orderbutton').onclick = showMenus;
+		this.find('#sellbutton').onclick = wannasell;
 	}
 })
 
@@ -792,6 +793,132 @@ const openBigImgPrev = function(src){
 		`,
 		onclick(){
 			this.remove();
+		}
+	}))
+}
+
+const wannasell = function(){
+	main.addChild(makeElement('div',{
+		style:`
+			position:absolute;
+			width:100%;
+			top:0;
+			left:0;
+			height:100%;
+			display:flex;
+			align-items:flex-start;
+			justify-content:center;
+		`,
+		innerHTML:`
+			<div
+			style="
+				background:white;
+				padding:20px;
+				border-radius:0 0 20px 20px;
+			"
+			id=whitebox
+			>
+				<div
+				style="
+					font-weight:bold;
+					font-size:24px;
+					margin-bottom:10px;
+				"
+				>
+					<span>Informasi Barang Anda!</span>
+				</div>
+				<div>
+					<div>
+						<span>Nama Barang</span>
+					</div>
+					<div>
+						<input placeholder=Nama_barang... id=name>
+					</div>
+				</div>
+				<div>
+					<div>
+						<span>Harga Barang</span>
+					</div>
+					<div>
+						<input placeholder=Harga_Barang... type=number id=price>
+					</div>
+				</div>
+				<div>
+					<div>
+						<span>Deskripsi Barang</span>
+					</div>
+					<div>
+						<textarea id=stuffDescription placeholder=Deskripsi_Barang style=outline:none></textarea>
+					</div>
+				</div>
+				<div>
+					<div>
+						<span>Alamat Anda</span>
+					</div>
+					<div>
+						<textarea id=stuffDescription placeholder=Alamat_Anda style=outline:none></textarea>
+					</div>
+				</div>
+				<div>
+					<div>
+						<span>Thumbnail Barang</span>
+					</div>
+					<div>
+						<input type=file id=thumbnails>
+					</div>
+				</div>
+				<div>
+					<div>
+						<span>Showcase Barang</span>
+					</div>
+					<div>
+						<input type=file multiple id=showcases>
+					</div>
+				</div>
+				<div
+				style="
+					margin-top:20px;
+					display:flex;
+					width:100%;
+					gap:10px;
+					justify-content:flex-end;
+				"
+				>
+					<div>
+						<span id=saveButton
+						class=akarabutton
+						style="
+							background:black;
+							border-radius:30px;
+						"
+						>
+							Simpan
+						</span>
+					</div>
+					<div>
+						<span id=cancelButton
+						class=akarabutton
+						style="
+							background:black;
+							border-radius:30px;
+						"
+						>
+							Batal
+						</span>
+					</div>
+				</div>
+			</div>
+		`,
+		buttonEvent(){
+			this.find('#saveButton').onclick = ()=>{
+				
+			}
+			this.find('#cancelButton').onclick = ()=>{
+				this.remove();
+			}
+		},
+		onadded(){
+			this.buttonEvent();
 		}
 	}))
 }
