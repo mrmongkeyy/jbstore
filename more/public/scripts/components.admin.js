@@ -119,7 +119,7 @@ const leftSide = makeElement('div',{
 			>
 			<div>Tambah</div>
 		</div>
-		<div class=button id=find
+		<div class=button id=market
 		style="
 			padding:10px;
 			background:white;
@@ -193,6 +193,9 @@ const leftSide = makeElement('div',{
 			newstok(){
 				newStokOpen();
 			},
+			market(){
+				loadData(1)
+			},
 			order(){
 				loadData(2);
 			},
@@ -210,6 +213,16 @@ const leftSide = makeElement('div',{
 });
 
 const newStokOpen = function(){
+	centerSide.addChild(makeElement('div',{
+		innerHTML:'Barang Baru',
+		style:`
+			margin-bottom:10px;
+			position:sticky;
+			top:0;
+			background:white;
+			margin-top:10px;
+		`
+	}))
 	centerSide.addChild(makeElement('div',{
 		id:'newStokOpen',
 		style:`
@@ -334,7 +347,6 @@ const gmenus = function(data){
 			width:100%;
 			overflow:auto;
 			scrollbar-width:none;
-			padding-bottom:10px;
 		`,
 		onadded(){
 			data.forEach((innerData)=>{
@@ -426,7 +438,7 @@ const normalizeData = function(data){
 }
 
 const processData = function(d,target=0){
-	const labelmap = ['Stok','PENDING','JOB','DONE'];
+	const labelmap = ['Stok Barang','Market','Pesanan','DONE'];
 	centerSide.find('#loading').remove();
 	centerSide.addChild(makeElement('div',{
 		innerHTML:`${labelmap[target]}`,

@@ -287,7 +287,7 @@ module.exports = {
 							background:white;
 							padding:0 20px;
 							overflow:auto;
-							height:auto;
+							height:100%;
 						}
 						.bigfont{
 							font-size:18px;
