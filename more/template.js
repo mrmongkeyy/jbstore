@@ -33,13 +33,11 @@ module.exports = {
 						::-webkit-scrollbar-thumb {
 							background: gray;
 						}
-						input{
-							font-family:goodone;
-							border:1px solid black;
-						}
 						textarea{
 							font-family:goodone;
-							border:1px solid black;
+							border:1px solid gray;
+							border-radius:20px;
+							padding:5px;
 						}
 						main{
 							-webkit-tap-highlight-color:transparent;
@@ -90,7 +88,13 @@ module.exports = {
 						input{
 							outline:none;
 							background:white;
-							padding:5px;
+							padding:10px;
+							border-radius:20px;
+							font-family:goodone;
+							border:1px solid gray;
+						}
+						input[type="file"]{
+							border:none;
 						}
 						.photocard{
 							width:50%;

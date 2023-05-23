@@ -604,9 +604,10 @@ const openMenuPreview = function(data){
 								<select
 								style="
 									border:1px solid black;
-									padding:2px 5px;
+									padding:10px;
 									background:white;
 									outline:none;
+									border-radius:20px;
 								"
 								>
 									<option value=0>JEMPUT</option>
