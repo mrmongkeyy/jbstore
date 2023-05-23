@@ -236,7 +236,7 @@ const normalizeData = function(data){
 		const newx = [data[i]];
 		if(data[i+1]){
 			newx.push(data[i+1]);
-		}
+		}else newx.push([]);
 		x.push(newx);
 	}
 	return x;
@@ -253,13 +253,13 @@ const gmenus = function(data){
 			padding-bottom:10px;
 		`,
 		onadded(){
-			data.forEach((innerData)=>{
+			data.forEach((innerData,i)=>{
 				this.addChild(
 					makeElement('div',{
 						style:`
 							display:flex;
 							justify-content:space-between;
-							margin-top:10px;
+							margin-top:${i===0?'10px':'5px'};
 						`,
 						onadded(){
 							this.addOne();
@@ -268,20 +268,23 @@ const gmenus = function(data){
 							innerData.forEach((innerDatain,i)=>{
 								this.addChild(makeElement('div',{
 									data:innerDatain,
+									removed:innerData[i].length===0?true:false,
 									style:`
 										width:100%;
-										margin-${i===0?'right':'left'}:2px;
+										margin-${i===0?'right':'left'}:${i===0&&!innerData[i+1]?'0px':'2px'};
 										padding:10px;
 										background:white;
+										opacity:${innerData[i].length===0?0:1};
+										cursor:${innerData[i].length===0?'initial':'pointer'};
 									`,
 									onmouseover(){
-										this.style.background = 'beige';
+										if(!this.removed)this.style.background = 'beige';
 									},
 									onmouseleave(){
-										this.style.background = 'white';
+										if(!this.removed)this.style.background = 'white';
 									},
 									onclick(){
-										openMenuPreview(this.data);
+										if(!this.removed)openMenuPreview(this.data);
 									},
 									innerHTML:`
 										<div

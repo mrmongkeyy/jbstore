@@ -77,7 +77,6 @@ module.exports = {
 							color:black;
 						}
 						#mieraamenubox div div{
-							cursor:pointer;
 						}
 						#finder{
 							width:50%;
