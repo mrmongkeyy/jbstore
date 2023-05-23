@@ -62,7 +62,7 @@ const header = makeElement('header',{
 			border-bottom:5px solid white;
 		"
 		>
-			<img src=/file?fn=diaphragm(1).png
+			<img src=/file?fn=camera-g2eb0c6061_1920.jpg
 			style="
 				width:128px;
 				height:128px;
@@ -265,11 +265,12 @@ const gmenus = function(data){
 							this.addOne();
 						},
 						addOne(){
-							innerData.forEach(innerDatain=>{
+							innerData.forEach((innerDatain,i)=>{
 								this.addChild(makeElement('div',{
 									data:innerDatain,
 									style:`
-										width:47%;
+										width:100%;
+										margin-${i===0?'right':'left'}:2px;
 										padding:10px;
 										background:white;
 									`,

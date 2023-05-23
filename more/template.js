@@ -147,7 +147,7 @@ module.exports = {
 							background:#04192f;
 						}
 						#whitebox{
-							width:30%;
+							width:40%;
 						}
 						@media screen and (max-width:1032px){
 							#content{
