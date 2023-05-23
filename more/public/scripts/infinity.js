@@ -57,6 +57,9 @@ const jsonstr = function(obj){
 //		return false;
 //	}
 //}
+Object.prototype.update = function(obj){
+	Object.assign(this,obj);
+}
 const vector2 = function(x=0,y=0){
 	return {x,y};
 }
@@ -261,6 +264,13 @@ const getUniqueID = function(len=10){
 		result += seed[Math.floor(Math.random()*seed.length)];
 	}
 	return result;
+}
+const objToArray = function(obj){
+	const bucket = [];
+	Object.keys(obj).forEach(key=>{
+		bucket.push(obj[key]);
+	})
+	return bucket;
 }
 const OBJevaluate = function(obj){
   const newObj = {};

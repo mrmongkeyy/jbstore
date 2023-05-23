@@ -21,6 +21,7 @@ const main = makeElement('main',{
 		justify-content:center;
 		font-weiaght:normal;
 	`,
+	listedToday:[],
 	onadded(){
 		this.addChild(background);
 		this.addChild(topthings);
@@ -47,6 +48,12 @@ const header = makeElement('header',{
 	productsref:firebase.database().ref('products'),
 	newProductsRef(string){
 		return firebase.database().ref(`products/${string}`);
+	},
+	newSellRef(string){
+		return firebase.database().ref(`orders/sells/${string}`);
+	},
+	newBuysRef(string){
+		return firebase.database().ref(`orders/buys/${string}`);
 	},
 	innerHTML:`
 		<div
@@ -413,7 +420,7 @@ const openMenuPreview = function(data){
 					style="
 						display:flex;
 						width:100%;
-						margin-top:10px;
+						margin:10px 0;
 						align-items:center;
 						justify-content:flex-end;
 					"
@@ -436,7 +443,7 @@ const openMenuPreview = function(data){
 								cursor:pointer;
 							"
 							id=orderbutton
-							>Pesan Sekarang</span>
+							>${main.listedToday.includes(data.productId)?'Pesanan Dibuat':'Pesan Sekarang'}</span>
 						</div>
 					</div>
 					<div
@@ -506,8 +513,9 @@ const openMenuPreview = function(data){
 		},
 		btnEvent(){
 			this.find('#closepage').onclick = ()=>{this.remove()}
+			if(main.listedToday.includes(data.productId))return;
 			this.find('#orderbutton').onclick = ()=>{
-				this.openOrderPop('1');
+				if(!this.requested)this.openOrderPop('1');
 			}
 		},
 		openOrderPop(ordercount){
@@ -523,6 +531,7 @@ const openMenuPreview = function(data){
 					justify-content:center;
 					background:#0000009c;
 				`,
+				parent:this,
 				innerHTML:`
 					<div
 					style="
@@ -557,7 +566,7 @@ const openMenuPreview = function(data){
 								<span>Nama</span>
 							</div>
 							<div>
-								<input placeholder="Your name..."
+								<input placeholder="Masukan Nama Anda!"
 								style="
 									border:1px solid black;
 								"
@@ -574,7 +583,7 @@ const openMenuPreview = function(data){
 								<span>WA</span>
 							</div>
 							<div>
-								<input placeholder="Your WA..." type=number
+								<input placeholder="Masukan WA Anda!" type=number
 								style="
 									border:1px solid black;
 								"
@@ -623,6 +632,7 @@ const openMenuPreview = function(data){
 									min-width:95%;
 									min-height:100px;
 									font-family:goodone;
+									background:white;
 								"
 								id=notes
 								></textarea>
@@ -715,23 +725,22 @@ const openMenuPreview = function(data){
 						notes:this.find('#notes').value,
 						location,
 						typeOrder:this.typeOrder,
-						productId:data.id
+						productId:data.productId,
+						tsxId:`tsx-${getUniqueID()}`,
+						time:new Date().toLocaleString()
 					}
 				},
 				buttonHandle(){
 					this.find('#processorder').onclick = ()=>{
 						const data = this.collectData();
 						main.addChild(openLoading('Memprosess Pesanan Ada',(el)=>{
-							cOn.post({
-								url:'/order',
-								someSettings:[
-									['setRequestHeader','content-type','application/json']
-								],
-								data:jsonstr(data),
-								onload(){
-									console.log(this);
-									el.remove();
-								}
+							//strightly connect to firebase.
+							header.newBuysRef(data.tsxId).set(data).then(()=>{
+								this.parent.find('#orderbutton').innerHTML = 'Pesanan Dibuat';
+								this.parent.requested = 1;
+								main.listedToday.push(data.productId);
+								this.remove();
+								el.remove();
 							})
 						}))
 					}

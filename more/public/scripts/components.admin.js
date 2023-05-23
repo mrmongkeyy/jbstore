@@ -27,6 +27,9 @@ const main = makeElement('main',{
 const content = makeElement('content',{
 	storageref:firebase.storage().ref(),
 	productsref:firebase.database().ref('products'),
+	sellsref:firebase.database().ref('orders/sells'),
+	buysref:firebase.database().ref('orders/buys'),
+	donesref:firebase.database().ref('orders/dones'),
 	newProductsRef(string){
 		return firebase.database().ref(`products/${string}`);
 	},
@@ -343,7 +346,7 @@ const datanull = function(){
 	`)
 }
 
-const gmenus = function(data){
+const gmenus = function(data,additional){
 	//data should be mapped before.
 	return makeElement('div',{
 		id:'mieraamenubox',
@@ -367,7 +370,6 @@ const gmenus = function(data){
 						},
 						addOne(){
 							innerData.forEach(innerDatain=>{
-								console.log(innerDatain);
 								this.addChild(makeElement('div',{
 									data:innerDatain,
 									style:`
@@ -382,7 +384,11 @@ const gmenus = function(data){
 										this.style.background = 'white';
 									},
 									onclick(){
-										openMenuPreview(this.data);
+										this.data.additional.update({
+											product:this.data.name,
+											price:this.data.price
+										});
+										requestDetails(this.data.additional);
 									},
 									innerHTML:`
 										<div
@@ -430,6 +436,248 @@ const gmenus = function(data){
 	})
 }
 
+const requestDetails = function(data){
+	centerSide.clear();
+	centerSide.addChild(makeElement('div',{
+		id:'requestDetailsPage',
+		style:`
+			height:100%;
+			width:100%;
+			display:flex;
+			justify-content:flex-start;
+			align-items:flex-start;
+			flex-direction:column;
+		`,
+		innerHTML:`
+			<div
+			style="
+				margin-top:10px;
+			"
+			>
+				<span>Indentitas Pembeli</span>
+			</div>
+			<div
+			style="
+				background:#ececec;
+				padding:2%;
+				max-height:80%;
+				width:96%;
+				margin-top:10px;
+				border-radius:20px;
+			"
+			>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Produk</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>${data.product}</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Harga</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>RP. ${data.price}</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Pemesan</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>${data.name}</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Whatsapp</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span
+						style="
+							background:#21d821;
+							padding:7px;
+							color:white;
+							border-radius:20px;
+						"
+						id=chatbutton
+						>
+							<a href=https://api.whatsapp.com/send?phone=+62${data.wa.slice(1)}&text=HalloBang! target=_blank
+							style="
+								color:white;
+								text-decoration:none;
+							"
+							>
+								Chat
+							</a>
+						</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Catatan</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>${data.notes}</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Tipe Transaksi</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>${data.typeOrder===0?'Jemput':'Antar'}</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Waktu Pemesanan</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<span>${data.time}</span>
+					</div>
+				</div>
+			</div>
+			<div
+			style="
+				margin-top:20px;
+				display:flex;
+				justify-content:flex-end;
+				width:100%;
+			"
+			>
+				<div
+				style="
+					width:100%;
+					background:black;
+					padding:10px;
+					border-radius:20px;
+					text-align:center;
+				"
+				>
+					<span
+					style="
+						color:white;
+					"
+					id=closebutton
+					>Tutup</span>
+				</div>
+			</div>
+		`,
+		buttonEvent(){
+			this.find('#closebutton').onclick = ()=>{
+				this.remove();
+				loadData(2);
+			}
+		},
+		onadded(){
+			this.buttonEvent();
+		}
+	}))
+}
+
+
+
 const normalizeData = function(data){
 	const x = [];
 	for(let i=0;i<data.length;i+=2){
@@ -442,7 +690,7 @@ const normalizeData = function(data){
 	return x;
 }
 
-const processData = function(d,target=0){
+const processData = function(d,target=0,additional){
 	const labelmap = ['Stok Barang','Market','Pesanan','DONE'];
 	centerSide.find('#loading').remove();
 	centerSide.addChild(makeElement('div',{
@@ -460,7 +708,7 @@ const processData = function(d,target=0){
 		data.push(Object.assign(d[key],{key}));
 	});
 	const normalizedData = normalizeData(data);
-	centerSide.addChild(gmenus(normalizedData));
+	centerSide.addChild(gmenus(normalizedData,additional));
 	if(data.length===0){
 		centerSide.addChild(makeElement('div',{
 			innerHTML:`Tidak Ada Data!`,
@@ -475,6 +723,7 @@ const processData = function(d,target=0){
 }
 
 const loadData = function(target=0){
+	const typemap = ['productsref','sellsref','buysref','donesref'];
 	centerSide.clear();
 	centerSide.addChild(makeElement('div',{
 		id:'loading',
@@ -500,13 +749,27 @@ const loadData = function(target=0){
 			</div>
 		`
 	}))
-	content.productsref.get().then(data=>{
+	content[typemap[target]].get().then(data=>{
 		data = data.val();
 		if(!data){
 			datanull();
-		}else{
-			processData(data,target);
-		}
+		}else if(target!=0){
+			//getting product data.
+			const ccontent = objToArray(data);
+			data = [];
+			let loopIndex = 0;
+			const getall = ()=>{
+				content.newProductsRef(ccontent[loopIndex].productId).get().then((product)=>{
+					product = product.val();
+					product.additional = ccontent[loopIndex];
+					data.push(product);
+					loopIndex++;
+					if(loopIndex<ccontent.length)getall();
+					else processData(data,target);
+				})
+			}
+			getall();
+		}else processData(data,target);
 	})
 }
 
