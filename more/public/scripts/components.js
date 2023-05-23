@@ -98,7 +98,6 @@ const header = makeElement('header',{
 			<div
 			style="
 				position:relative;
-				margin-top:10px;
 				font-size:16px;
 				height:32px;
 			"
@@ -111,7 +110,7 @@ const header = makeElement('header',{
 				"
 				id=vision
 				>
-					Jangan Pernah Ragu Dengan Pilihanmu!
+					Nggak Perlu Ragu Dengan Pilihanmu!
 				</span>
 			</div>
 			<div
@@ -121,7 +120,7 @@ const header = makeElement('header',{
 				font-size:24px;
 				display:flex;
 				justify-content:space-around;
-				width:60%;
+				width:100%;
 			"
 			>
 				<span
@@ -130,18 +129,20 @@ const header = makeElement('header',{
 					padding:5px 10px;
 					background:brown;
 					cursor:pointer;
+					border-radius:20px;
 				"
 				id=orderbutton
-				>Beli</span>
+				>Beli Sekarang</span>
 				<span
 				style="
 					color:white;
 					padding:5px 10px;
 					background:brown;
 					cursor:pointer;
+					border-radius:20px;
 				"
 				id=sellbutton
-				>Jual</span>
+				>Jual Sekarang</span>
 			</div>
 		</div>
 	`,
@@ -430,21 +431,15 @@ const openMenuPreview = function(data){
 						style="
 							text-align:center;
 							padding:10px;
-							background:black;
+							background:${main.listedToday.includes(data.productId)?'brown':'black'};
 							border-radius:30px;
 							width:100%;
 							cursor:pointer;
+							color:white;
 						"
+						id=orderbutton
 						>
-							<span
-							style="
-								padding:8px;
-								background:black;
-								color:white;
-								cursor:pointer;
-							"
-							id=orderbutton
-							>${main.listedToday.includes(data.productId)?'Pesanan Dibuat':'Pesan Sekarang'}</span>
+							<span>${main.listedToday.includes(data.productId)?'Pesanan Dibuat':'Pesan Sekarang'}</span>
 						</div>
 					</div>
 					<div
@@ -739,6 +734,7 @@ const openMenuPreview = function(data){
 							//strightly connect to firebase.
 							header.newBuysRef(data.tsxId).set(data).then(()=>{
 								this.parent.find('#orderbutton').innerHTML = 'Pesanan Dibuat';
+								this.parent.find('#orderbutton').style.background = 'brown';
 								this.parent.requested = 1;
 								main.listedToday.push(data.productId);
 								this.remove();
@@ -833,7 +829,7 @@ const wannasell = function(){
 						<span>Nama Barang</span>
 					</div>
 					<div>
-						<input placeholder=Nama_barang... id=name>
+						<input placeholder=Nama_Barang... id=name>
 					</div>
 				</div>
 				<div>

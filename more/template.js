@@ -263,6 +263,9 @@ module.exports = {
 							cursor:pointer;
 							color:white;
 						}
+						#screeningbuttons{
+							display:flex;
+						}
 						main{
 							-webkit-tap-highlight-color:transparent;
 							user-select:none;
@@ -276,6 +279,10 @@ module.exports = {
 						}
 						textarea{
 							font-family:goodone;
+							border-radius:20px;
+							padding:10px;
+							border:1px solid gray;
+							background:white;
 						}
 						#leftSide{
 							width:10%;
@@ -322,8 +329,9 @@ module.exports = {
 						input{
 							outline:none;
 							background:white;
-							border:none;
-							padding:5px;
+							border:1px solid gray;
+							padding:10px;
+							border-radius:20px;
 						}
 						.photocard{
 							width:50%;
@@ -394,6 +402,9 @@ module.exports = {
 								width:auto;
 								align-items:normal;
 								flex-direction:row;
+							}
+							#screeningbuttons{
+								display:none;
 							}
 							#centerSide{
 								width:auto;

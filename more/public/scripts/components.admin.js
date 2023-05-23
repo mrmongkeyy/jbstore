@@ -52,16 +52,62 @@ const content = makeElement('content',{
 				align-items:center;
 				font-weight:bold;
 				height:100%;
+				justify-content:space-between;
 			"
 			>	
-				<img src=file?fn=diaphragm(1).png
+				<div
 				style="
-					width:32px;
-					height:32px;
-					margin-right:10px;
-					object-fit:cover;
-				">
-				<span>FF STORE ADMIN</span>
+					display:flex;
+					align-items:center;
+					padding:5px 10px;
+					border-radius:20px;
+				"
+				>
+					<img src=file?fn=diaphragm(1).png
+					style="
+						width:32px;
+						height:32px;
+						margin-right:10px;
+						object-fit:cover;
+					">
+					<span>FF STORE ADMIN</span>
+				</div>
+				<div
+				style="
+					align-items:center;
+					gap:10px;
+					padding:5px 10px;
+					border-radius:20px;
+					background:#ececec;
+					justify-content:space-around;
+				"
+				id=screeningbuttons
+				>
+					<img src=file?fn=width.png
+					style="
+						width:20px;
+						height:20px;
+						object-fit:cover;
+						padding:5px;
+						border:1px solid black;
+						border-radius:50%;
+						cursor:pointer;
+					"
+					id=width
+					>
+					<img src=file?fn=height.png
+					style="
+						width:18px;
+						height:18px;
+						object-fit:cover;
+						padding:5px;
+						border:1px solid black;
+						border-radius:50%;
+						cursor:pointer;
+					"
+					id=height
+					>
+				</div>
 			</div>
 		</div>
 		<div id=body
@@ -72,10 +118,26 @@ const content = makeElement('content',{
 		"
 		></div>
 	`,
+	screeningmapping:{
+		width(){
+			this.wCondition = this.wCondition?false:true;
+			content.style.width = !this.wCondition?'60%':'100%';
+		},
+		wCondition:false,
+		hCondition:false,
+		height(){
+			this.hCondition = this.hCondition?false:true;
+			content.style.height = !this.hCondition?'80%':'100%';
+		}
+	},
 	onadded(){
 		const body = this.find('#body');
 		body.addChild(leftSide);
 		body.addChild(centerSide);
+		//screeningbuttons setups.
+		this.findall('#screeningbuttons img').forEach(button=>{
+			button.onclick = this.screeningmapping[button.id];
+		})
 	}
 })
 
@@ -236,6 +298,7 @@ const newStokOpen = function(){
 		style:`
 			background:#ececec;
 			padding:20px;
+			border-radius:20px;
 		`,
 		innerHTML:`
 			<div>
@@ -243,7 +306,7 @@ const newStokOpen = function(){
 					<span>Nama Barang</span>
 				</div>
 				<div>
-					<input placeholder=Nama_barang... id=name>
+					<input placeholder=Nama_Barang... id=name>
 				</div>
 			</div>
 			<div>
@@ -644,6 +707,7 @@ const requestDetails = function(data){
 				display:flex;
 				justify-content:flex-end;
 				width:100%;
+				gap:5px;
 			"
 			>
 				<div
@@ -653,13 +717,48 @@ const requestDetails = function(data){
 					padding:10px;
 					border-radius:20px;
 					text-align:center;
+					cursor:pointer;
 				"
+					id=donebutton
 				>
 					<span
 					style="
 						color:white;
 					"
+					>Selesai</span>
+				</div>
+				<div
+				style="
+					width:100%;
+					background:black;
+					padding:10px;
+					border-radius:20px;
+					text-align:center;
+					cursor:pointer;
+				"
+					id=cancelbutton
+				>
+					<span
+					style="
+						color:white;
+					"
+					>Batal</span>
+				</div>
+				<div
+				style="
+					width:100%;
+					background:black;
+					padding:10px;
+					border-radius:20px;
+					text-align:center;
+					cursor:pointer;
+				"
 					id=closebutton
+				>
+					<span
+					style="
+						color:white;
+					"
 					>Tutup</span>
 				</div>
 			</div>
@@ -692,24 +791,24 @@ const normalizeData = function(data){
 
 const processData = function(d,target=0,additional){
 	const labelmap = ['Stok Barang','Market','Pesanan','DONE'];
-	centerSide.find('#loading').remove();
-	centerSide.addChild(makeElement('div',{
-		innerHTML:`${labelmap[target]}`,
-		style:`
-			margin-bottom:10px;
-			position:sticky;
-			top:0;
-			background:white;
-			margin-top:10px;
-		`
-	}))
 	const data = [];
 	Object.keys(d).forEach(key=>{
 		data.push(Object.assign(d[key],{key}));
 	});
 	const normalizedData = normalizeData(data);
+	centerSide.find('#loading').remove();
+	centerSide.addChild(makeElement('div',{
+		innerHTML:`<span id=count>${data.length}</span> ${labelmap[target]}`,
+		style:`
+			position:sticky;
+			top:0;
+			background:white;
+			margin-top:10px;
+			margin-left:10px;
+		`
+	}))
 	centerSide.addChild(gmenus(normalizedData,additional));
-	if(data.length===0){
+	if(normalizedData.length===0){
 		centerSide.addChild(makeElement('div',{
 			innerHTML:`Tidak Ada Data!`,
 			style:`
