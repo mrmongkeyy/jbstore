@@ -461,7 +461,7 @@ const openMenuPreview = function(data){
 					style="
 						font-size:16px;
 						margin-top:10px;
-						max-height:300px;
+						height:300px;
 						overflow:auto;
 						scrollbar-width:thin;
 						padding:5px;
@@ -475,7 +475,7 @@ const openMenuPreview = function(data){
 						display:flex;
 						align-items:center;
 						justify-content:flex-start;
-						height:50%;
+						height:100%;
 						width:100%;
 						overflow:auto;
 						scrollbar-width:thin;
