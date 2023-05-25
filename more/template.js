@@ -282,7 +282,8 @@ module.exports = {
 							border-radius:20px;
 							padding:10px;
 							border:1px solid gray;
-							background:white;
+							background:#ececec;
+							outline:none;
 						}
 						#leftSide{
 							width:10%;
@@ -296,9 +297,9 @@ module.exports = {
 						#centerSide{
 							width:100%;
 							background:white;
-							padding:0 20px;
 							overflow:auto;
 							height:100%;
+							position:relative;
 						}
 						.bigfont{
 							font-size:18px;
@@ -328,7 +329,7 @@ module.exports = {
 						}
 						input{
 							outline:none;
-							background:white;
+							background:#ececec;
 							border:1px solid gray;
 							padding:10px;
 							border-radius:20px;
@@ -402,6 +403,7 @@ module.exports = {
 								width:auto;
 								align-items:normal;
 								flex-direction:row;
+								padding:0px;
 							}
 							#screeningbuttons{
 								display:none;

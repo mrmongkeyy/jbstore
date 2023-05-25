@@ -468,7 +468,7 @@ const openMenuPreview = function(data){
 						background:whitesmoke;
 					"
 					>
-						<span>${data.description}</span>
+						<span id=descriptionplace>Loading...</span>
 					</div>
 					<div
 					style="
@@ -504,6 +504,7 @@ const openMenuPreview = function(data){
 			})
 		},
 		onadded(){
+			this.find('#descriptionplace').innerText = data.description;
 			this.btnEvent();
 			this.addShowcase();
 		},
@@ -805,6 +806,7 @@ const wannasell = function(){
 			display:flex;
 			align-items:flex-start;
 			justify-content:center;
+			background:#0000008a;
 		`,
 		innerHTML:`
 			<div

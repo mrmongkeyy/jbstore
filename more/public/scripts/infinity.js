@@ -107,7 +107,6 @@ const toInject = {
 		addChild(child){
 			this.appendChild(child);
 			flex.components.push(child);
-			if(child.onstyling)child.onstyling();
 			if(child.onadded)child.onadded();
 		},
 		show(setting='block'){
@@ -121,7 +120,7 @@ const toInject = {
 			}
 		},
 		saveRemove(p){
-			const el = this.find(p);
+			const el =	this.querySelector(p);
 			if(el)el.remove();
 		},
 		clear(){
@@ -141,13 +140,12 @@ const makeElement = function(name,optional={}){
 }
 document.body.addChild = function(child){
 	this.appendChild(child);
-	if(child.onstyling)child.onstyling();
 	if(child.onadded)child.onadded();
 }
 
 window.onresize = function(e){
 	flex.components.forEach(component=>{
-		if(component.onscreenChange)component.onscreenChange(e);
+		if(component.onScreenChange)component.onScreenChange(e);
 	})
 }
 

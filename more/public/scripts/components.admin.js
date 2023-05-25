@@ -12,7 +12,7 @@ const main = makeElement('main',{
 		display:flex;
 		width:100%;
 		height:100%;
-		background:#04192f;
+		background:aliceblue;
 		position:absolute;
 		flex-direction:column;
 		font-family:goodone;
@@ -20,7 +20,7 @@ const main = makeElement('main',{
 		justify-content:center;
 	`,
 	onadded(){
-		this.addChild(background);
+		//this.addChild(background);
 		this.addChild(content);
 	}
 })
@@ -92,6 +92,7 @@ const content = makeElement('content',{
 						border:1px solid black;
 						border-radius:50%;
 						cursor:pointer;
+						background:white;
 					"
 					id=width
 					>
@@ -104,6 +105,7 @@ const content = makeElement('content',{
 						border:1px solid black;
 						border-radius:50%;
 						cursor:pointer;
+						background:white;
 					"
 					id=height
 					>
@@ -291,14 +293,16 @@ const newStokOpen = function(){
 			top:0;
 			background:white;
 			margin-top:10px;
+			margin-left:10px;
 		`
 	}))
 	centerSide.addChild(makeElement('div',{
 		id:'newStokOpen',
 		style:`
-			background:#ececec;
+			border:3px solid #ececec;
 			padding:20px;
 			border-radius:20px;
+			margin:0 10px;
 		`,
 		innerHTML:`
 			<div>
@@ -409,7 +413,7 @@ const datanull = function(){
 	`)
 }
 
-const gmenus = function(data,additional){
+const gmenus = function(data){
 	//data should be mapped before.
 	return makeElement('div',{
 		id:'mieraamenubox',
@@ -441,17 +445,78 @@ const gmenus = function(data,additional){
 										background:white;
 									`,
 									onmouseover(){
-										this.style.background = 'beige';
+										this.style.background = '#ececec';
 									},
 									onmouseleave(){
 										this.style.background = 'white';
 									},
 									onclick(){
-										this.data.additional.update({
-											product:this.data.name,
-											price:this.data.price
-										});
-										requestDetails(this.data.additional);
+										if(this.data.additional){
+											this.data.additional.update({
+												product:this.data.name,
+												price:this.data.price
+											});
+											requestDetails(this.data.additional);
+										}else{
+											this.openEditMenu();
+										}
+									},
+									openEditMenu(){
+										this.editMenuOpened = !this.editMenuOpened?true:false;
+										if(this.editMenuOpened){
+											this.find('#thumbnail').addChild(makeElement('div',{
+												style:`
+													position:absolute;
+													display:flex;
+													padding:5px 10px;
+													background:white;
+													border-radius:20px;
+													align-items:center;
+													gap:10px;
+												`,
+												id:'wannamore',
+												innerHTML:`
+													<div
+													style="
+														display:flex;
+														align-items:center;
+													"
+													>
+														<img src=/file?fn=pen.png
+														style="
+															width:24px;
+															height:24px;
+															cursor:pointer;
+														"
+														id=editbutton
+														>
+													</div>
+													<div
+													style="
+														display:flex;
+														align-items:center;
+													"
+													>
+														<img src=/file?fn=delete.png
+														style="
+															width:24px;
+															height:24px;
+															cursor:pointer;
+														"
+														id=removebutton
+														>
+													</div>
+												`,
+												onadded(){
+													this.find('#editbutton').onclick = ()=>{
+														openEditingPage(innerDatain);
+													}
+													this.find('#removebutton').onclick = ()=>{
+														removeData();
+													}
+												}
+											}))
+										}else this.saveRemove('#wannamore');
 									},
 									innerHTML:`
 										<div
@@ -459,15 +524,27 @@ const gmenus = function(data,additional){
 											width:100%;
 											height:200px;
 											background:black;
+											display:flex;
+											align-items:center;
+											justify-content:center;
+											position:relative;
 										"
+										id=thumbnail
 										>
-											<img src=${innerDatain.thumbnails}
+											<div
 											style="
 												width:100%;
 												height:100%;
-												object-fit:cover;
 											"
 											>
+												<img src=${innerDatain.thumbnails}
+												style="
+													width:100%;
+													height:100%;
+													object-fit:cover;
+												"
+												>
+											</div>
 										</div>
 										<div
 										style="
@@ -499,13 +576,185 @@ const gmenus = function(data,additional){
 	})
 }
 
+const openEditingPage = function(data){
+	console.log(data);
+	centerSide.addChild(makeElement('div',{
+		id:'openeditingpage',
+		style:`
+			position:absolute;
+			width:100%;
+			height:100%;
+			display:flex;
+			background:#0000008a;
+			top:0;
+			justify-content:center;
+			align-items:flex-start;
+			overflow:auto;
+		`,
+		innerHTML:`
+			<div
+			style="
+				width:80%;
+				background:white;
+				border-radius:0 0 20px 20px;
+				padding:10px;
+				margin-bottom:20px;
+			"
+			>
+				<div
+				style="
+					display:flex;
+					justify-content:flex-end;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+					gap:10px;
+					position:sticky;
+					top:0;
+				"
+				>
+					<div
+					style="
+						background:black;
+						padding:5px;
+						color:white;
+						text-align:center;
+						border-radius:20px;
+						cursor:pointer;
+					"
+					>
+						<span>Batal</span>
+					</div>
+					<div
+					style="
+						background:black;
+						padding:5px;
+						color:white;
+						text-align:center;
+						border-radius:20px;
+						cursor:pointer;
+					"
+					>
+						<span>Simpan</span>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+					flex-direction:column;
+				"
+				>
+					<div>
+						<span>Thumbnail</span>
+					</div>
+					<div
+					style="
+						background:#ececec;
+						display:flex;
+						align-items:center;
+						justify-content:center;
+						border-radius:20px;
+						height:200px;
+						overflow:hidden;
+					"
+					>
+						<img src="${data.thumbnails}"
+						style="
+							height:100%;
+							object-fit:cover;
+							max-width:100%;
+						"
+						>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Produk</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<input value="${data.name}">
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Harga</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						RP. <input value=${data.price} type=number>
+					</div>
+				</div>
+				<div
+				style="
+					display:flex;
+					justify-content:space-between;
+					align-items:center;
+					margin-bottom:5px;
+					padding:10px;
+					background:white;
+					border-radius:20px;
+				"
+				>
+					<div>
+						<span>Deskripsi</span>
+					</div>
+					<div
+					style="
+						text-align:right;
+					"
+					>
+						<textarea>${data.description}</textarea>
+					</div>
+				</div>
+			</div>
+		`
+	}))
+}
+
+const removeData = function(){
+	
+}
+
 const requestDetails = function(data){
 	centerSide.clear();
 	centerSide.addChild(makeElement('div',{
 		id:'requestDetailsPage',
 		style:`
 			height:100%;
-			width:100%;
+			padding:0 20px;
 			display:flex;
 			justify-content:flex-start;
 			align-items:flex-start;
@@ -774,8 +1023,6 @@ const requestDetails = function(data){
 		}
 	}))
 }
-
-
 
 const normalizeData = function(data){
 	const x = [];
